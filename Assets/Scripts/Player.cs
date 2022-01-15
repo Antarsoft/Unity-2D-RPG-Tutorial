@@ -8,12 +8,14 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float z_MoveSpeed = 1;
     private BoxCollider2D z_BoxCollider;
+    private Animator z_Animator;
 
 
     //Methods
     private void Start()
     {
         z_BoxCollider = GetComponent<BoxCollider2D>();
+        z_Animator = GetComponent<Animator>();
     }
 
     private void FixedUpdate()
@@ -57,6 +59,9 @@ public class Player : MonoBehaviour
             //STOP MOVING ON THE Y AXIS
             moveDelta.y = 0;
         }
+
+        bool isWalking = moveDelta.magnitude > 0;
+        z_Animator.SetBool("IsWalking", isWalking);
 
         transform.Translate(moveDelta * Time.fixedDeltaTime * z_MoveSpeed);
     }
